@@ -1,11 +1,9 @@
-# Mini Noise Reporter
+# Noise Reporter
 
-A simplified learning version of the Westminster `report-it-noise` app.
-Same stack, fewer pages, no auth or CRM. Built so you can study it and tinker.
+A Noise Reporter Application
 
 ## Stack
 
-Same as your work app (minus auth):
 - React 18 + TypeScript
 - Vite (dev server + build tool)
 - React Router (multi-page navigation)
@@ -55,22 +53,3 @@ src/
   schemas/
     yourDetails.ts         <- Zod schema
 ```
-
-## How this maps to the real work app
-
-| Mini app                      | Real work app                                 |
-| ----------------------------- | --------------------------------------------- |
-| `App.tsx`                     | `src/app/app.tsx`                             |
-| `pages/Start.tsx`             | `src/app/components/pages/beforeYouStart/...` |
-| `pages/NoiseType.tsx`         | `src/app/components/pages/noiseType/...`      |
-| `pages/NoiseDetails.tsx`      | `src/app/components/pages/noiseDetails/...`   |
-| `pages/YourDetails.tsx`       | `src/app/components/pages/yourDetails/...`    |
-| `pages/Confirmation.tsx`      | `src/app/components/pages/confirmation/...`   |
-| `store/useNoiseStore.ts`      | `src/store/store.ts` + slices                 |
-| `hooks/useSubmitReport.ts`    | `src/hooks/useHandleSubmit.ts`                |
-| `schemas/yourDetails.ts`      | `yourDetailsSchemaWithPhoneNumber` in utils   |
-
-Things deliberately left out (for clarity): Azure B2C auth, Sentry,
-Google Analytics, the atomic-design template layer (atoms/molecules/organisms),
-and phone-number validation edge cases. Get comfortable here first, then
-those will make sense in context.
