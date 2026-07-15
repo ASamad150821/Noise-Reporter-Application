@@ -2,20 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { useNoiseStore, NoiseType as NoiseTypeValue } from '../store/useNoiseStore';
 
-/*
- * First "real" form page. The user picks a radio option.
- *
- * KEY CONCEPT — controlled inputs:
- *
- * The radio inputs don't keep their own state. Instead we read the
- * selected value from the Zustand store and write back to the store
- * whenever the user changes the selection. Every character/click
- * round-trips through state.
- *
- * That pattern is what makes multi-page forms work: because the value
- * lives in the store, it's still there after the user navigates away
- * and comes back.
- */
 
 const OPTIONS: { value: NoiseTypeValue; label: string }[] = [
   { value: 'music', label: 'Loud music' },
@@ -28,8 +14,6 @@ export function NoiseType() {
   const navigate = useNavigate();
   const noiseType = useNoiseStore((state) => state.noiseType);
   const setNoiseType = useNoiseStore((state) => state.setNoiseType);
-
-  const canContinue = noiseType !== '';
 
   return (
     <div>
@@ -59,7 +43,7 @@ export function NoiseType() {
         </Button>
         <Button
           onClick={() => navigate('/noise-details')}
-          disabled={!canContinue}
+          disabled={noiseType == ""}
         >
           Continue
         </Button>

@@ -1,39 +1,18 @@
-import { ChangeEvent, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ZodError } from 'zod';
+import {YourDetailsInputField} from "../components/YourDetailsInputField";
 import { Button } from '../components/Button';
-import { useNoiseStore } from '../store/useNoiseStore';
-import { yourDetailsSchema } from '../schemas/yourDetails';
-import { useSubmitReport } from '../hooks/useSubmitReport';
+import { useNavigate } from "react-router-dom";
+import { useNoiseStore } from "../store/useNoiseStore";
+import { ChangeEvent, useState } from "react";
+import { yourDetailsSchema } from "../schemas/yourDetails";
+import { ZodError } from "zod";
+import { type YourDetails } from "../store/useNoiseStore";
+import { useSubmitReport } from "../hooks/useSubmitReport";
 
-/*
- * THIS IS THE MOST INTERESTING PAGE. Read it carefully — it's the
- * closest analogue to the real work app's YourDetails.tsx.
- *
- * What's happening:
- *
- * 1. Controlled form inputs backed by the Zustand store. Every keystroke
- *    updates the store.
- *
- * 2. Local component state (useState) for field-level errors. We don't
- *    put errors in the global store because they're only relevant
- *    while this form is on screen.
- *
- * 3. Zod validation on submit. If the data is invalid, we catch the
- *    ZodError and set per-field error messages.
- *
- * 4. If valid, we call `submit()` — which is the TanStack useMutation
- *    function from our custom hook. Loading/error/navigation are all
- *    handled inside the hook.
- *
- * 5. `isPending` from the mutation is wired to the button's `disabled`
- *    and label. While the "request" is in flight the user can't double-
- *    submit and gets visual feedback.
- */
 
 type FieldErrors = Partial<Record<'firstName' | 'lastName' | 'email', string>>;
 
 export function YourDetails() {
+<<<<<<< HEAD
   const navigate = useNavigate();
   const { yourDetails, setYourDetails, noiseType, howLong, description } =
     useNoiseStore();
@@ -52,10 +31,37 @@ export function YourDetails() {
       yourDetailsSchema.parse(yourDetails);
       // Valid — kick off the submission. onSuccess in the hook navigates
       // us to /confirmation.
+=======
+
+  let navigate = useNavigate();
+  let [errors, setErrors] = useState<FieldErrors>({});
+  
+  let yourDetails = useNoiseStore((state) => state.yourDetails);
+  let setYourDetails = useNoiseStore((state) => state.setYourDetails);
+  let [localDetails, setLocalDetails] = useState({
+    firstName: yourDetails.firstName,
+    lastName: yourDetails.lastName,
+    email: yourDetails.email,
+  });
+
+  let result =  useSubmitReport();
+  let submit = result.mutate;
+  let isPending = result.isPending;
+  let noiseType = useNoiseStore((state) => state.noiseType);
+  let howLong = useNoiseStore((state) => state.howLong);
+  let description = useNoiseStore((state) => state.description);
+
+
+function handleDetailsSubmission() {
+    try {
+      yourDetailsSchema.parse(localDetails);
+      setYourDetails(localDetails);
+>>>>>>> 2d98fc5 (Updated version of the Report It Application. Changes include adding a 404 not founderror message page.)
       submit({
         noiseType,
         howLong,
         description,
+<<<<<<< HEAD
         ...yourDetails,
       });
     } catch (err) {
@@ -64,6 +70,15 @@ export function YourDetails() {
         const fieldErrors: FieldErrors = {};
         for (const issue of err.issues) {
           const field = issue.path[0] as keyof FieldErrors;
+=======
+        ...localDetails
+      })
+   } catch (error) {
+      if (error instanceof ZodError) {
+        let fieldErrors: FieldErrors = {};
+        for (let issue of error.issues) {
+          let field = issue.path[0] as keyof FieldErrors;
+>>>>>>> 2d98fc5 (Updated version of the Report It Application. Changes include adding a 404 not founderror message page.)
           if (!fieldErrors[field]) {
             fieldErrors[field] = issue.message;
           }
@@ -71,15 +86,31 @@ export function YourDetails() {
         setErrors(fieldErrors);
       }
     }
+<<<<<<< HEAD
   };
 
   return (
     <div>
       <h2 className="text-lg font-semibold mb-4">Your details</h2>
+=======
+  }
+
+function handleDetailsChange(event: ChangeEvent<HTMLInputElement>, field: keyof typeof localDetails) {
+    console.log(localDetails)
+    setLocalDetails({...localDetails, [field]: event.target.value});
+    setErrors({...errors, [field]: undefined});
+}
+
+  return (
+
+    <div>
+      <h2 className="text-lg font-semibold mb-4">Your Details</h2>
+>>>>>>> 2d98fc5 (Updated version of the Report It Application. Changes include adding a 404 not founderror message page.)
       <p className="text-sm text-gray-600 mb-4">
         We need these so we can contact you about the case.
       </p>
 
+<<<<<<< HEAD
       <Field
         label="First name"
         value={yourDetails.firstName}
@@ -144,3 +175,26 @@ function Field({ label, type = 'text', value, onChange, error }: FieldProps) {
     </label>
   );
 }
+=======
+      <YourDetailsInputField type="text" value={localDetails.firstName} onChange={(e) => handleDetailsChange(e, 'firstName')} error={errors.firstName}>First Name</YourDetailsInputField>
+      <YourDetailsInputField type="text" value={localDetails.lastName} onChange={(e) => handleDetailsChange(e, 'lastName')} error={errors.lastName}>Last Name</YourDetailsInputField>
+      <YourDetailsInputField type="text" value={localDetails.email} onChange={(e) => handleDetailsChange(e, 'email')} error={errors.email}>Email</YourDetailsInputField>
+
+      <div className="flex justify-between">
+        <Button variant="secondary" onClick={() => navigate('/noise-details')} disabled={isPending}>Back</Button>
+        <Button onClick={handleDetailsSubmission} disabled={isPending}>
+          {isPending ? 'Submitting...' : 'Submit'}
+        </Button>
+      </div>
+
+    </div>
+
+  )
+}
+
+
+
+
+
+
+>>>>>>> 2d98fc5 (Updated version of the Report It Application. Changes include adding a 404 not founderror message page.)

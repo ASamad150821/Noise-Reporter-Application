@@ -3,19 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { useNoiseStore } from '../store/useNoiseStore';
 
-/*
- * Second form page. Two controlled inputs:
- *   - a <select> for how long
- *   - a <textarea> for description
- *
- * Notice the TypeScript event types:
- *   - ChangeEvent<HTMLSelectElement>
- *   - ChangeEvent<HTMLTextAreaElement>
- *
- * You'll see these constantly in React+TS. The generic parameter
- * tells TS which HTML element fired the event, which then tells it
- * which properties `event.target` has.
- */
 
 const DURATIONS = [
   { value: 'under-hour', label: 'Less than an hour' },
