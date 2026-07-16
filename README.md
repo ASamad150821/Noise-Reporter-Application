@@ -17,16 +17,6 @@ Same stack, fewer pages, no auth or CRM. Built so you can study it and tinker.
 - Zod (form validation)
 - Tailwind CSS (styling)
 
-## How to run it
-
-```bash
-cd _learning/mini-noise-reporter
-npm install
-npm run dev
-```
-
-Then open http://localhost:5173 in a browser.
-
 ## The user journey
 
 1. **Start** — intro page, click "Start report"
