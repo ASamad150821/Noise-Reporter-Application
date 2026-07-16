@@ -3,6 +3,10 @@
 A simplified learning version of the Westminster `report-it-noise` app.
 Same stack, fewer pages, no auth or CRM. Built so you can study it and tinker.
 
+**Live demo:** [noise-reporter-application.vercel.app](https://noise-reporter-application.vercel.app)
+
+![Mini Noise Reporter screenshot](docs/ScreenshotOfApplication.png)
+
 ## Stack
 
 - React 18 + TypeScript
