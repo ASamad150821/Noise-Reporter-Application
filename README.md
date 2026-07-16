@@ -1,7 +1,6 @@
 # Mini Noise Reporter
 
-A simplified learning version of the Westminster `report-it-noise` app.
-Same stack, fewer pages, no auth or CRM. Built so you can study it and tinker.
+A Mini Noise Reporter Application to report disturbances within the area.
 
 **Live demo:** [noise-reporter-application.vercel.app](https://noise-reporter-application.vercel.app)
 
