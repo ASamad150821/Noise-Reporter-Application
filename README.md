@@ -1,7 +1,6 @@
 # Mini Noise Reporter
 
-A simplified learning version of the Westminster `report-it-noise` app.
-Same stack, fewer pages, no auth or CRM. Built so you can study it and tinker.
+A Mini Noise Reporter Application to report disturbances within the area.
 
 **Live demo:** [noise-reporter-application.vercel.app](https://noise-reporter-application.vercel.app)
 
@@ -16,16 +15,6 @@ Same stack, fewer pages, no auth or CRM. Built so you can study it and tinker.
 - TanStack Query (submission + loading/error states)
 - Zod (form validation)
 - Tailwind CSS (styling)
-
-## How to run it
-
-```bash
-cd _learning/mini-noise-reporter
-npm install
-npm run dev
-```
-
-Then open http://localhost:5173 in a browser.
 
 ## The user journey
 
