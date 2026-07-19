@@ -17,9 +17,8 @@ export function NoiseType() {
 
   return (
     <div>
-      <h2 className="text-lg font-semibold mb-4">What kind of noise is it?</h2>
-
       <fieldset className="space-y-2 mb-6">
+        <legend className="text-lg font-semibold mb-4">What kind of noise is it?</legend>
         {OPTIONS.map((opt) => (
           <label
             key={opt.value}

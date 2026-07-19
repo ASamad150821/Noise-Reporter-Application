@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 
 type LayoutProps = {
@@ -14,11 +14,16 @@ const stepOrder = [
 ];
 
 export function Layout({children} : LayoutProps) {
-   
+
     const { pathname } = useLocation();
     const stepIndex = stepOrder.findIndex((s) => s.path === pathname);
     const currentStep = stepIndex === -1 ? null : stepOrder[stepIndex]; //Extracts out an object with the current step's path and label, or null if the current path isn't in stepOrder.
-   
+    const contentRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        contentRef.current?.focus();
+    }, [pathname]);
+
     return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white border-b border-gray-200 px-6 py-4">
@@ -28,8 +33,8 @@ export function Layout({children} : LayoutProps) {
       </header>
 
       <main className="max-w-2xl mx-auto p-6">
-        {currentStep ? 
-          <p className="text-sm text-gray-500 mb-4">
+        {currentStep ?
+          <p className="text-sm text-gray-500 mb-4" aria-live="polite">
             Step {stepIndex + 1} of {stepOrder.length} -
             <span className="font-medium text-gray-700">
               {currentStep.label}
@@ -37,7 +42,11 @@ export function Layout({children} : LayoutProps) {
           </p>
           : null}
 
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div
+          ref={contentRef}
+          tabIndex={-1}
+          className="bg-white rounded-lg shadow-sm border border-gray-200 p-6"
+        >
           {children}
         </div>
       </main>
