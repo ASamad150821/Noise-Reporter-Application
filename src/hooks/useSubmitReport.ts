@@ -5,31 +5,33 @@ import { useMutation } from "@tanstack/react-query";
 type ReportPayload = {
     noiseType : string,
     howLong : string,
-    description: string,
-    firstName: string,
-    lastName: string,
-    email: string
-};
+    description : string,
+    firstName : string,
+    lastName : string,
+    email : string
+}
 
 type SubmitResponse = {
-    caseReference: string
-};
-
+    caseReference : string
+}
 
 async function submitReport(payload : ReportPayload) : Promise<SubmitResponse> {
     await new Promise((resolve) => setTimeout(resolve, 800));
     console.log('Would have submitted to the server:', payload);
     const caseReference = `NR-${Math.floor(Math.random() * 9000 + 1000)}`;
-    return { caseReference };
+    return { caseReference : caseReference};
 }
+
 
 export function useSubmitReport() {
     let navigate = useNavigate();
     let setCaseReference = useNoiseStore((state) => state.setCaseReference);
+    let reset = useNoiseStore((state) => state.reset)
 
     return useMutation({
         mutationFn: submitReport,
         onSuccess: (data) => {
+          reset();
           setCaseReference(data.caseReference);
           navigate('/confirmation');
         },

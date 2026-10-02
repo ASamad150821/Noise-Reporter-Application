@@ -1,13 +1,14 @@
-import { ButtonHTMLAttributes, ReactNode } from 'react';
+import type { ButtonHTMLAttributes, ReactNode } from "react";
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: 'primary' | 'secondary';
   children: ReactNode;
 };
 
-export function Button({variant = 'primary', className = '', disabled = false, children, ...rest}: ButtonProps) {
+export function Button({ variant = 'primary', className = '', disabled, children, ...rest }: ButtonProps) {
   const base =
     'px-4 py-2 rounded font-medium transition disabled:opacity-50 disabled:cursor-not-allowed';
+
   const styles =
     variant === 'primary'
       ? 'bg-blue-600 text-white hover:bg-blue-700'

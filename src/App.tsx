@@ -6,6 +6,7 @@ import { YourDetails } from './pages/YourDetails';
 import { Confirmation } from './pages/Confirmation';
 import { NotFound } from './pages/NotFound';
 import { Layout } from './components/Layout';
+import { Summary } from './pages/Summary';
 
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
             <Route path="/noise-type" element={<NoiseType></NoiseType>} />
             <Route path="/noise-details" element={<NoiseDetails></NoiseDetails>} />
             <Route path="/your-details" element={<YourDetails></YourDetails>} />
+            <Route path="/summary" element={<Summary></Summary>}></Route>
             <Route path="/confirmation" element={<Confirmation></Confirmation>} />
             <Route path="*" element={<NotFound></NotFound>} />
         </Routes>
