@@ -1,43 +1,38 @@
 import { useNavigate } from "react-router-dom";
-import { useNoiseStore } from "../store/useNoiseStore";
+import { useNoiseStore, YourDetails } from "../store/useNoiseStore";
 import { useMutation } from "@tanstack/react-query";
 
-type ReportPayload = {
-    noiseType : string,
-    howLong : string,
-    description : string,
-    firstName : string,
-    lastName : string,
-    email : string
-}
+type ReportResponse = { caseReference : string }
 
-type SubmitResponse = {
-    caseReference : string
-}
+async function submitReport(yourDetails : YourDetails) : Promise<ReportResponse> {
 
-async function submitReport(payload : ReportPayload) : Promise<SubmitResponse> {
-    await new Promise((resolve) => setTimeout(resolve, 800));
-    console.log('Would have submitted to the server:', payload);
-    const caseReference = `NR-${Math.floor(Math.random() * 9000 + 1000)}`;
-    return { caseReference : caseReference};
+  const { noiseType, description, howLong } = useNoiseStore.getState();
+
+  const res = await fetch('/api/SubmitCase', {
+        method: 'POST',
+        headers: { 'Content-Type' : 'application/json'},
+        body: JSON.stringify({ noiseType, howLong, description, ...yourDetails})
+    });
+    if (!res.ok) throw new Error(`Server error: ${res.status}`);
+    return res.json();
 }
 
 
 export function useSubmitReport() {
     let navigate = useNavigate();
-    let setCaseReference = useNoiseStore((state) => state.setCaseReference);
-    let reset = useNoiseStore((state) => state.reset)
+    let reset = useNoiseStore((state) => state.reset);
+    let setcaseReference = useNoiseStore((state) => state.setCaseReference);
 
     return useMutation({
         mutationFn: submitReport,
-        onSuccess: (data) => {
+        onSuccess: (response) => {
           reset();
-          setCaseReference(data.caseReference);
+          setcaseReference(response.caseReference);
           navigate('/confirmation');
         },
         onError: (error) => {
           console.error('Submit failed:', error);
-          alert('Something went wrong submitting your report.');
+          navigate('/*')
         }
     })
 }

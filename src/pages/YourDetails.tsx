@@ -6,8 +6,7 @@ import { yourDetailsSchema } from "../schemas/yourDetails";
 import { ZodError } from "zod";
 import { type YourDetails } from "../store/useNoiseStore";
 import { YourDetailsInputField } from '../components/YourDetailsInputField';
-
-type FieldErrors = Partial<Record<'firstName' | 'lastName' | 'email', string>>;
+import { FieldErrors } from "../schemas/yourDetails"
 
 export function YourDetails() {
 

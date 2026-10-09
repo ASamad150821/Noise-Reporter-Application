@@ -15,7 +15,7 @@ const emptyDetails: YourDetails = {
   email: "",
 };
 
-type NoiseStore = {
+export type NoiseStore = {
   noiseType: NoiseType;
   howLong: string;
   description: string;

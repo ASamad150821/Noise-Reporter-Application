@@ -18,12 +18,8 @@ export function Summary() {
         return <Navigate to="/" replace></Navigate>
     }
 
-
     function handleDetailsSubmission() {
         submit({
-            noiseType : noiseType,
-            howLong : howLong,
-            description : description,
             ...yourDetails
         })
     }
